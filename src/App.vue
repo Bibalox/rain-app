@@ -7,6 +7,8 @@
 </template>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@700&display=swap');
+
 :root {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -25,7 +27,11 @@ body {
   height: 100%;
   justify-content: center;
   width: 100%;
+  padding: 0;
+  margin: 0;
   
   color: white;
+  font-family: dosis;
+  font-size: 48px;
 }
 </style>
