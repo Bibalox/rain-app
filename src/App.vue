@@ -1,9 +1,54 @@
 <script setup lang="ts">
 import AppHero from '@components/AppHero.vue'
+import AppSwitch from '@components/AppSwitch.vue'
+
+import type { Option } from './types'
+
+const options: { [key: string]: Option[] } = {
+  atmospheres: [
+    {
+      id: 'gentle-rain',
+      label: 'Gentle Rain'
+    },
+    {
+      id: 'distant-storm',
+      label: 'Distant storm'
+    }
+  ],
+  durations: [
+    {
+      id: '30-minutes',
+      label: '30 minutes'
+    },
+    {
+      id: '1-hour',
+      label: '1 hour'
+    }
+  ]
+}
+
+const settings = {
+  atmosphere: 'gentle-rain',
+  duration: '1-hour'
+}
+
+const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') => settings[optionType] = setting
 </script>
 
 <template>
   <app-hero />
+  <main class="app__main">
+    <app-switch
+      :options="options.atmospheres"
+      :value="settings.atmosphere"
+      @click="setting => updateSettings(setting, 'atmosphere')"
+    />
+    <app-switch
+      :options="options.durations"
+      :value="settings.duration"
+      @click="setting => updateSettings(setting, 'duration')"
+    />
+  </main>
 </template>
 
 <style lang="scss">
@@ -40,12 +85,22 @@ body {
   width: 100%;
 }
 
-#app {
+.app {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  max-height: 900px;
   max-width: 480px;
-  padding: 24px;
+  padding: 16px 24px 32px;
   width: 100%;
+
+  &__main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 24px;
+    justify-content: center;
+  }
 }
 </style>
