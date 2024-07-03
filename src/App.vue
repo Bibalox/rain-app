@@ -4,28 +4,27 @@ import AppSwitch from '@components/AppSwitch.vue'
 
 import type { Option } from './types'
 
-const options: { [key: string]: Option[] } = {
-  atmospheres: [
-    {
-      id: 'gentle-rain',
-      label: 'Gentle Rain'
-    },
-    {
-      id: 'distant-storm',
-      label: 'Distant storm'
-    }
-  ],
-  durations: [
-    {
-      id: '30-minutes',
-      label: '30 minutes'
-    },
-    {
-      id: '1-hour',
-      label: '1 hour'
-    }
-  ]
-}
+const atmospheres: Option[] = [
+  {
+    id: 'gentle-rain',
+    label: 'Gentle Rain'
+  },
+  {
+    id: 'distant-storm',
+    label: 'Distant storm'
+  }
+]
+
+const durations: Option[] = [
+  {
+    id: '30-minutes',
+    label: '30 minutes'
+  },
+  {
+    id: '1-hour',
+    label: '1 hour'
+  }
+]
 
 const settings = {
   atmosphere: 'gentle-rain',
@@ -39,12 +38,12 @@ const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') 
   <app-hero />
   <main class="app__main">
     <app-switch
-      :options="options.atmospheres"
+      :options="atmospheres"
       :value="settings.atmosphere"
       @click="setting => updateSettings(setting, 'atmosphere')"
     />
     <app-switch
-      :options="options.durations"
+      :options="durations"
       :value="settings.duration"
       @click="setting => updateSettings(setting, 'duration')"
     />
@@ -91,7 +90,7 @@ body {
   flex-direction: column;
   height: 100%;
   max-height: 900px;
-  max-width: 480px;
+  max-width: 512px;
   padding: 16px 24px 32px;
   width: 100%;
 

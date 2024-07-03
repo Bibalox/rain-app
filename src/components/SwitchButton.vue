@@ -38,9 +38,6 @@ const manageClick = () => {
   padding: 20px 4px 16px;
   z-index: 20;
 
-  border-radius: 24px;
-  background-color: rgba(255,255,255,.1);
-
   &__icon {
     height: 56px;
     width: 56px;

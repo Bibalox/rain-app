@@ -1,17 +1,27 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 import SwitchButton from '@components/SwitchButton.vue'
 
 import type { Option } from 'src/types.ts'
 
 const props = defineProps<{
   options: Option[]
-  value: string
+  value: String
 }>()
 
 const emit = defineEmits(['click'])
 
-const manageClick = (toto: string) => {
-  emit('click', toto)
+const findPosition = (id: String) => {
+  const tata = props.options.find(option => option.id === id)
+  return tata ? props.options.indexOf(tata) : 0
+}
+
+const position = ref(findPosition(props.value))
+
+const manageClick = async (setting: String) => {
+  emit('click', setting)
+  position.value = findPosition(setting)
 }
 </script>
 
@@ -24,7 +34,7 @@ const manageClick = (toto: string) => {
       :label="option.label"
       @click="manageClick(option.id)"
     />
-    <div class="app-switch__active-marker" :style="`--position: ${props.value}`" />
+    <div class="app-switch__active-marker" :style="`--position: ${position}`" />
   </div>
 </template>
 
@@ -39,7 +49,6 @@ $spacing: 8px;
   gap: $spacing;
   padding: $spacing;
   position: relative;
-  transition: transform .2s ease-in-out;
   width: 100%;
 
   &__active-marker {
@@ -47,10 +56,12 @@ $spacing: 8px;
     border-radius: 24px;
     border: 2px solid (var(--tertiary-element));
     box-sizing: border-box;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, .5);
     height: calc(100% - (2 * $spacing));
     left: $spacing;
     position: absolute;
     transform: translateX(calc(var(--position) * (100% + $spacing)));
+    transition: transform .5s ease-in-out;
     top: $spacing;
     width: calc(50% - (3/2 * $spacing));
     z-index: 10;
