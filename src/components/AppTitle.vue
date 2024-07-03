@@ -13,9 +13,10 @@ const props = defineProps<{
 
 <style lang="scss">
 .app-title {
-  color: white;
+  color: var(--primary-element);
   cursor: default;
   font-family: Dosis;
   font-size: 48px;
+  margin: 0;
 }
 </style>

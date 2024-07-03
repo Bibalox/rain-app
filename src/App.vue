@@ -13,6 +13,14 @@ import AppTitle from '@components/AppTitle.vue'
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+
+  --primary-background: #000;
+  --secondary-background: #151515;
+  --tertiary-background: #343434;
+
+  --primary-element: rgba(255, 255, 255, .93);
+  --secondary-element: rgba(255, 255, 255, .3);
+  --tertiary-element: rgba(255, 255, 255, .07);
 }
 
 html {
@@ -22,7 +30,7 @@ html {
 
 body {
   align-items: center;
-  background-color: black;
+  background-color: var(--primary-background);
   display: flex;
   height: 100%;
   justify-content: center;
