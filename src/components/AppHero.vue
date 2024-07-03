@@ -15,11 +15,10 @@ import AppTitle from '@components/AppTitle.vue'
 .app-hero {
   align-items: center;
   display: flex;
-  justify-content: center;
   height: 180px;
+  justify-content: center;
   position: relative;
-
-  //background-color: coral;
+  width: 100%;
 
   &__icon {
     position: absolute;
