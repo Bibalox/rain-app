@@ -1,9 +1,9 @@
 <script setup lang="ts">
-
+import AppTitle from '@components/AppTitle.vue'
 </script>
 
 <template>
-  <span>Hello world!</span>
+  <app-title value="Hello world!" />
 </template>
 
 <style lang="scss">
@@ -26,12 +26,9 @@ body {
   display: flex;
   height: 100%;
   justify-content: center;
-  width: 100%;
-  padding: 0;
   margin: 0;
-  
-  color: white;
-  font-family: Quicksand;
-  font-size: 48px;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
 }
 </style>
