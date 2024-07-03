@@ -96,7 +96,7 @@ body {
   height: 100%;
   max-height: 800px;
   max-width: 512px;
-  padding: 16px 24px 32px;
+  padding: 16px 16px 32px;
   width: 100%;
 
   &__main {
