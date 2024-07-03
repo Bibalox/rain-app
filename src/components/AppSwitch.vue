@@ -52,7 +52,7 @@ $spacing: 8px;
     border-radius: 24px;
     border: 2px solid (var(--tertiary-element));
     box-sizing: border-box;
-    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, .5);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, .25);
     height: calc(100% - (2 * $spacing));
     left: $spacing;
     position: absolute;
