@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 
 import SwitchButton from '@components/SwitchButton.vue'
 
@@ -11,7 +11,11 @@ const props = defineProps<{
 }>()
 
 const findPosition = (id: String) => props.options.findIndex(option => option.id === id)
-const position = ref(findPosition(props.value))
+const position = ref(0)
+
+onBeforeMount(() => {
+  position.value = findPosition(props.value)
+})
 
 const emit = defineEmits(['click'])
 
