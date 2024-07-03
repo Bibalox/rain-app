@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import AppTitle from '@components/AppTitle.vue'
+import AppHero from '@components/AppHero.vue'
 </script>
 
 <template>
-  <app-title value="Hello world!" />
+  <app-hero />
 </template>
 
 <style lang="scss">
@@ -37,6 +37,15 @@ body {
   margin: 0;
   overflow: hidden;
   padding: 0;
+  width: 100%;
+}
+
+#app {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  padding: 24px;
   width: 100%;
 }
 </style>
