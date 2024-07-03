@@ -67,6 +67,11 @@ const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') 
   --tertiary-element: rgba(255, 255, 255, .07);
 }
 
+button, a {
+  touch-action: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 html {
   height: calc(100% + env(safe-area-inset-top));
   -webkit-tap-highlight-color: transparent;
