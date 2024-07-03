@@ -10,14 +10,10 @@ const props = defineProps<{
   value: String
 }>()
 
-const emit = defineEmits(['click'])
-
-const findPosition = (id: String) => {
-  const tata = props.options.find(option => option.id === id)
-  return tata ? props.options.indexOf(tata) : 0
-}
-
+const findPosition = (id: String) => props.options.findIndex(option => option.id === id)
 const position = ref(findPosition(props.value))
+
+const emit = defineEmits(['click'])
 
 const manageClick = async (setting: String) => {
   emit('click', setting)

@@ -94,7 +94,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  max-height: 900px;
+  max-height: 800px;
   max-width: 512px;
   padding: 16px 24px 32px;
   width: 100%;
