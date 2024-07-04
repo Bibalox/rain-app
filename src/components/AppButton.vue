@@ -25,17 +25,21 @@ const manageClick = () => {
   background-color: var(--tertiary-background);
   border: none;
   border-radius: 28px;
+  cursor: pointer;
   display: flex;
   height: 56px;
   justify-content: center;
-  transition: background-color .3s;
+  transition: transform .3s;
 
   @media (hover: hover) {
     &:hover {
-      background-color: var(--secondary-background);
-      cursor: pointer;
+      transform: translateY(2px);
     }
   }
+
+  &:active {
+      transform: translateY(4px);
+    }
 
   &__label {
     color: var(--primary-element);
