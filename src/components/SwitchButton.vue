@@ -28,6 +28,7 @@ const manageClick = () => {
   align-items: center;
   background-color: transparent;
   border: none;
+  border-radius: 24px;
   cursor: pointer;
   display: flex;
   flex: 1;
@@ -36,8 +37,15 @@ const manageClick = () => {
   height: 128px;
   justify-content: center;
   padding: 20px 4px 16px;
+  transition: background-color .3s;
   z-index: 20;
 
+  @media (hover: hover) {
+    &:hover {
+      background-color: rgba(255,255,255,.02);
+    }
+  }
+  
   &__icon {
     height: 56px;
     width: 56px;

@@ -20,29 +20,27 @@ const manageClick = () => {
 </template>
 
 <style lang="scss">
-.switch-button {
+.app-button {
   align-items: center;
-  background-color: transparent;
+  background-color: var(--tertiary-background);
   border: none;
-  cursor: pointer;
+  border-radius: 28px;
   display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 16px;
-  height: 128px;
+  height: 56px;
   justify-content: center;
-  padding: 20px 4px 16px;
-  z-index: 20;
+  transition: background-color .3s;
 
-  &__icon {
-    height: 56px;
-    width: 56px;
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--secondary-background);
+      cursor: pointer;
+    }
   }
 
   &__label {
     color: var(--primary-element);
     font-family: "Quicksand";
-    font-size: 14px;
+    font-size: 20px;
   }
 }
 </style>

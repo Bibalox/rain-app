@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppHero from '@components/AppHero.vue'
 import AppSwitch from '@components/AppSwitch.vue'
+import AppButton from '@components/AppButton.vue'
 
 import type { Option } from './types'
 
@@ -49,6 +50,7 @@ const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') 
       @click="setting => updateSettings(setting, 'duration')"
     />
   </main>
+  <app-button label="Begin" />
 </template>
 
 <style lang="scss">
@@ -71,6 +73,10 @@ const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') 
 button, a {
   touch-action: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+label {
+  cursor: inherit;
 }
 
 html {
