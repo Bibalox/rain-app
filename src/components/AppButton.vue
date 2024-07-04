@@ -1,17 +1,11 @@
 <script setup lang="ts">
-const props = defineProps<{
-  label: string
-}>()
+const props = defineProps<{ label: string }>()
 
-const emit = defineEmits(['click'])
-
-const manageClick = () => {
-  emit('click')
-}
+defineEmits(['click'])
 </script>
 
 <template>
-  <button class="app-button" @click="manageClick()">
+  <button class="app-button" @click="$emit('click')">
     <label
       class="app-button__label"
       v-text="props.label"
@@ -29,17 +23,26 @@ const manageClick = () => {
   display: flex;
   height: 56px;
   justify-content: center;
-  transition: transform .3s;
 
   @media (hover: hover) {
+    transition: transform .3s;
+
     &:hover {
-      transform: translateY(2px);
+      transform: translateY(1px);
+    }
+
+    &:active {
+      transform: translateY(3px);
     }
   }
 
-  &:active {
-      transform: translateY(4px);
+  @media (hover: none) {
+    transition: transform .2s;
+
+    &:active {
+      transform: translateY(2px);
     }
+  }
 
   &__label {
     color: var(--primary-element);
