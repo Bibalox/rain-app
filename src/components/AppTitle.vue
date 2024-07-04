@@ -18,5 +18,6 @@ const props = defineProps<{
   font-family: Dosis;
   font-size: 48px;
   margin: 0;
+  text-align: center;
 }
 </style>
