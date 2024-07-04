@@ -70,15 +70,6 @@ const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') 
   --tertiary-element: rgba(255, 255, 255, .07);
 }
 
-button, a {
-  touch-action: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-label {
-  cursor: inherit;
-}
-
 html {
   height: calc(100% + env(safe-area-inset-top));
   -webkit-tap-highlight-color: transparent;
@@ -113,5 +104,13 @@ body {
     gap: 24px;
     justify-content: center;
   }
+}
+
+button, a {
+  touch-action: none;
+}
+
+label {
+  cursor: inherit;
 }
 </style>
