@@ -42,41 +42,41 @@ const settings = {
 
 const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') => settings[optionType] = setting
 
-const manageClick = () => {
-  if (state.waiting) {
-    state.waiting = false
-  } else {
-    state.waiting = true
-  }
+const startTheRain = () => {
+  state.waiting = false
+}
+
+const stopTheRain = () => {
+  state.waiting = true
 }
 </script>
 
 <template>
-  <main class="app__main">
-    <transition>
-      <div v-if="state.waiting" class="app__main-content">
-        <app-hero />
-        <div class="app__form">
-          <app-switch
-            :options="data.atmospheres"
-            :value="settings.atmosphere"
-            @click="setting => updateSettings(setting, 'atmosphere')"
-          />
-          <app-switch
-            :options="data.durations"
-            :value="settings.duration"
-            @click="setting => updateSettings(setting, 'duration')"
-          />
-        </div>
-      </div>
+  <transition>
+    <main v-if="state.waiting" class="app__main">
+      <app-hero />
+      <section class="app__section">
+        <app-switch
+          :options="data.atmospheres"
+          :value="settings.atmosphere"
+          @click="setting => updateSettings(setting, 'atmosphere')"
+        />
+        <app-switch
+          :options="data.durations"
+          :value="settings.duration"
+          @click="setting => updateSettings(setting, 'duration')"
+        />
+      </section>
+      <app-button label="Begin" @click="startTheRain()" />
+    </main>
       
-      <div v-else class="app__main-content">
-        <app-title value="Sleep well" />
-      </div>
-    </transition>
-  </main>
-
-  <app-button :label="state.waiting ? 'Begin' : 'Stop'" @click="manageClick()" />
+    <main v-else class="app__main">
+      <section class="app__section">
+        <app-title value="Sleep well" fade-out />
+      </section>
+      <app-button label="Stop" @click="stopTheRain()" />
+    </main>
+  </transition>
 </template>
 
 <style lang="scss">
@@ -97,52 +97,47 @@ const manageClick = () => {
 }
 
 html {
-  height: calc(100% + env(safe-area-inset-top));
+  height: 100%;
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
   align-items: center;
   background-color: var(--primary-background);
+  box-sizing: border-box;
   display: flex;
   height: 100%;
   justify-content: center;
   margin: 0;
   overflow: hidden;
-  padding: 0;
+  padding: calc(16px + env(safe-area-inset-top)) 16px calc(32px + env(safe-area-inset-bottom));
   width: 100%;
 }
 
 .app {
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   height: 100%;
   max-height: 800px;
   max-width: 512px;
-  padding: 16px 16px 32px;
+  position: relative;
   width: 100%;
 
   &__main {
-    flex: 1;
-    position: relative;
-  }
-
-  &__main-content {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    justify-content: center;
     position: absolute;
+    height: 100%;
     width: 100%;
   }
 
-  &__form {
+  &__section {
     display: flex;
     flex: 1;
     flex-direction: column;
     gap: 24px;
     justify-content: center;
+    width: 100%;
   }
 }
 
@@ -156,13 +151,13 @@ label {
 
 .v-enter-from,
 .v-leave-to {
-  transition: opacity 1s;
+  transition: opacity 1.5s;
   opacity: 0;
 }
 
 .v-leave-from,
 .v-enter-to {
-  transition: opacity 2s;
+  transition: opacity 2.5s .75s;
   opacity: 1;
 }
 </style>
