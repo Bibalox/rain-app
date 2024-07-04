@@ -119,7 +119,7 @@ body {
   flex-direction: column;
   height: 100%;
   max-height: 800px;
-  max-width: 512px;
+  max-width: 400px;
   position: relative;
   width: 100%;
 

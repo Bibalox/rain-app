@@ -28,11 +28,11 @@ defineEmits(['click'])
     transition: transform .2s;
 
     &:hover {
-      transform: translateY(1px);
+      transform: translateY(2px);
     }
 
     &:active {
-      transform: translateY(3px);
+      transform: translateY(4px);
     }
   }
 
