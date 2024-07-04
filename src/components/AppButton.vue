@@ -25,7 +25,7 @@ defineEmits(['click'])
   justify-content: center;
 
   @media (hover: hover) {
-    transition: transform .3s;
+    transition: transform .2s;
 
     &:hover {
       transform: translateY(1px);
@@ -37,7 +37,7 @@ defineEmits(['click'])
   }
 
   @media (hover: none) {
-    transition: transform .2s;
+    transition: transform .1s;
 
     &:active {
       transform: translateY(2px);
