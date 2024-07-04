@@ -7,15 +7,15 @@ import type { Option } from 'src/types.ts'
 
 const props = defineProps<{
   options: Option[]
-  value: String
+  value: string
 }>()
 
-const findPosition = (id: String) => props.options.findIndex(option => option.id === id)
+const findPosition = (id: string) => props.options.findIndex(option => option.id === id)
 const position = ref(findPosition(props.value))
 
 const emit = defineEmits(['click'])
 
-const manageClick = async (setting: String) => {
+const manageClick = async (setting: string) => {
   emit('click', setting)
   position.value = findPosition(setting)
 }
