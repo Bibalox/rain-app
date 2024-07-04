@@ -3,15 +3,11 @@ import type { Option } from 'src/types.ts'
 
 const props = defineProps<Option>()
 
-const emit = defineEmits(['click'])
-
-const manageClick = () => {
-  emit('click')
-}
+defineEmits(['click'])
 </script>
 
 <template>
-  <button class="switch-button" @click="manageClick()">
+  <button class="switch-button" @click="$emit('click')">
     <img
       class="switch-button__icon"
       :src="`/icons/switch/${props.id}.svg`"
