@@ -4,6 +4,7 @@ import { reactive } from 'vue'
 import AppHero from '@components/AppHero.vue'
 import AppSwitch from '@components/AppSwitch.vue'
 import AppTitle from '@components/AppTitle.vue'
+import AppPuddle from '@components/AppPuddle.vue'
 import AppButton from '@components/AppButton.vue'
 
 import type { Option } from './types'
@@ -71,6 +72,7 @@ const stopTheRain = () => {
     </main>
       
     <main v-else class="app__main">
+      <app-puddle />
       <section class="app__section">
         <app-title value="Sleep well" fade-out />
       </section>
