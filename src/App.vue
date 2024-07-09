@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { ref } from 'vue'
 
 import AppHero from '@components/AppHero.vue'
 import AppSwitch from '@components/AppSwitch.vue'
@@ -7,13 +7,23 @@ import AppTitle from '@components/AppTitle.vue'
 import AppPuddle from '@components/AppPuddle.vue'
 import AppButton from '@components/AppButton.vue'
 
+import type { Ref } from 'vue'
 import type { Option } from './types'
 
-const state = reactive({
-  waiting: true
-})
 
-const data: { [key: string]: Option[] } = {
+// STATE
+
+const waiting = ref(true)
+
+const settings = {
+  atmosphere: 'gentle-rain',
+  duration: '1-hour'
+}
+
+
+// DATA
+
+const options: { [key: string]: Option[] } = {
   atmospheres: [
     {
       id: 'gentle-rain',
@@ -36,34 +46,56 @@ const data: { [key: string]: Option[] } = {
   ]
 }
 
-const settings = {
-  atmosphere: 'gentle-rain',
-  duration: '1-hour'
-}
+const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+const audioSource: Ref<AudioBufferSourceNode | null> = ref(null)
+
+
+// METHODS
 
 const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') => settings[optionType] = setting
 
-const startTheRain = () => {
-  state.waiting = false
+const startTheRain = async () => {
+  waiting.value = false
+
+  // TO BE REMOVED
+  const duration = settings.duration === '30-minutes' ? 2 : 10
+
+  const arrayBuffer = await fetch(
+    '/sounds/rain-03.flac'
+  ).then(res => res.arrayBuffer())
+
+  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer)
+
+  audioSource.value = audioContext.createBufferSource()
+  audioSource.value.buffer = audioBuffer
+  audioSource.value.loop = true
+  audioSource.value.connect(audioContext.destination)
+  audioSource.value.start()
+  audioSource.value.stop(audioContext.currentTime + duration)
 }
 
 const stopTheRain = () => {
-  state.waiting = true
+  waiting.value = true
+
+  if (audioSource.value) {
+    audioSource.value.stop()
+    audioSource.value = null
+  }
 }
 </script>
 
 <template>
   <transition>
-    <main v-if="state.waiting" class="app__main">
+    <main v-if="waiting" class="app__main">
       <app-hero />
       <section class="app__section">
         <app-switch
-          :options="data.atmospheres"
+          :options="options.atmospheres"
           :value="settings.atmosphere"
           @click="setting => updateSettings(setting, 'atmosphere')"
         />
         <app-switch
-          :options="data.durations"
+          :options="options.durations"
           :value="settings.duration"
           @click="setting => updateSettings(setting, 'duration')"
         />
