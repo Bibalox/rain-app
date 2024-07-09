@@ -58,8 +58,7 @@ const startTheRain = async () => {
   waiting.value = false
 
   // Declaration of the loop settings
-  const loopDuration = settings.duration === '30-minutes' ? 1800 : 3600
-  const fadeDuration = 2
+  const duration = settings.duration === '30-minutes' ? 1800 : 3600
   const now = audioContext.currentTime
   const arrayBuffer = await fetch('/sounds/rain-03.flac').then(res => res.arrayBuffer())
   const audioBuffer = await audioContext.decodeAudioData(arrayBuffer)
@@ -73,11 +72,11 @@ const startTheRain = async () => {
 
   // Declaration of the different loop steps
   gainNode.gain.exponentialRampToValueAtTime(0.01, now)
-  gainNode.gain.exponentialRampToValueAtTime(1, now + fadeDuration)
+  gainNode.gain.exponentialRampToValueAtTime(1, now + 3)
   audioSource.value.start()
-  gainNode.gain.exponentialRampToValueAtTime(1, now + loopDuration - (fadeDuration * 10))
-  gainNode.gain.exponentialRampToValueAtTime(0.01, now + loopDuration)
-  audioSource.value.stop(now + loopDuration)
+  gainNode.gain.exponentialRampToValueAtTime(1, now + duration - 20)
+  gainNode.gain.exponentialRampToValueAtTime(0.01, now + duration)
+  audioSource.value.stop(now + duration)
 }
 
 const stopTheRain = () => {
@@ -87,7 +86,7 @@ const stopTheRain = () => {
     const now = audioContext.currentTime
     
     gainNode.gain.exponentialRampToValueAtTime(gainNode.gain.value, now)
-    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 2)
+    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 3)
     audioSource.value.stop(now + 2)
 
     audioSource.value = null
