@@ -48,7 +48,7 @@ const options: { [key: string]: Option[] } = {
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 const audioSource: Ref<AudioBufferSourceNode | null> = ref(null)
-
+const gainNode = audioContext.createGain()
 
 // METHODS
 
@@ -57,28 +57,39 @@ const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') 
 const startTheRain = async () => {
   waiting.value = false
 
-  // TO BE REMOVED
-  const duration = settings.duration === '30-minutes' ? 2 : 10
-
-  const arrayBuffer = await fetch(
-    '/sounds/rain-03.flac'
-  ).then(res => res.arrayBuffer())
-
+  // Declaration of the loop settings
+  const loopDuration = settings.duration === '30-minutes' ? 1800 : 3600
+  const fadeDuration = 2
+  const now = audioContext.currentTime
+  const arrayBuffer = await fetch('/sounds/rain-03.flac').then(res => res.arrayBuffer())
   const audioBuffer = await audioContext.decodeAudioData(arrayBuffer)
 
+  // Setting of the audio source
   audioSource.value = audioContext.createBufferSource()
   audioSource.value.buffer = audioBuffer
   audioSource.value.loop = true
-  audioSource.value.connect(audioContext.destination)
+  audioSource.value.connect(gainNode)
+  gainNode.connect(audioContext.destination)
+
+  // Declaration of the different loop steps
+  gainNode.gain.exponentialRampToValueAtTime(0.01, now)
+  gainNode.gain.exponentialRampToValueAtTime(1, now + fadeDuration)
   audioSource.value.start()
-  audioSource.value.stop(audioContext.currentTime + duration)
+  gainNode.gain.exponentialRampToValueAtTime(1, now + loopDuration - (fadeDuration * 10))
+  gainNode.gain.exponentialRampToValueAtTime(0.01, now + loopDuration)
+  audioSource.value.stop(now + loopDuration)
 }
 
 const stopTheRain = () => {
   waiting.value = true
 
   if (audioSource.value) {
-    audioSource.value.stop()
+    const now = audioContext.currentTime
+    
+    gainNode.gain.exponentialRampToValueAtTime(gainNode.gain.value, now)
+    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 2)
+    audioSource.value.stop(now + 2)
+
     audioSource.value = null
   }
 }
