@@ -50,6 +50,7 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 const audioSource: Ref<AudioBufferSourceNode | null> = ref(null)
 const gainNode = audioContext.createGain()
 
+
 // METHODS
 
 const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') => settings[optionType] = setting
@@ -59,8 +60,9 @@ const startTheRain = async () => {
 
   // Declaration of the loop settings
   const duration = settings.duration === '30-minutes' ? 1800 : 3600
+  const fileID = Math.floor(Math.random() * 3) + 1
   const now = audioContext.currentTime
-  const arrayBuffer = await fetch('/sounds/rain-03.flac').then(res => res.arrayBuffer())
+  const arrayBuffer = await fetch(`/sounds/${settings.atmosphere}-0${fileID}.flac`).then(res => res.arrayBuffer())
   const audioBuffer = await audioContext.decodeAudioData(arrayBuffer)
 
   // Setting of the audio source
