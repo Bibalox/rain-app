@@ -14,6 +14,7 @@ import type { Option } from './types'
 // STATE
 
 const waiting = ref(true)
+const timeoutID = ref(0)
 
 const settings = {
   atmosphere: 'gentle-rain',
@@ -63,7 +64,7 @@ const startTheRain = async () => {
 
   playAudio(rain)
   // DURATIONS TO BE FIXED
-  setTimeout(async () => {
+  timeoutID.value = setTimeout(async () => {
     await stopAudio(rain, 2000)
     waiting.value = true
   }, 10000)
@@ -71,6 +72,7 @@ const startTheRain = async () => {
 
 const stopTheRain = async () => {
   waiting.value = true
+  clearTimeout(timeoutID.value)
   stopAudio(rain)
 }
 </script>
