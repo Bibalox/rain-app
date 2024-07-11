@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { playAudio, stopAudio } from '@utils/audio'
 
 import AppHero from '@components/AppHero.vue'
 import AppSwitch from '@components/AppSwitch.vue'
@@ -7,7 +8,6 @@ import AppTitle from '@components/AppTitle.vue'
 import AppPuddle from '@components/AppPuddle.vue'
 import AppButton from '@components/AppButton.vue'
 
-import type { Ref } from 'vue'
 import type { Option } from './types'
 
 
@@ -46,10 +46,7 @@ const options: { [key: string]: Option[] } = {
   ]
 }
 
-const audioContext = new (window.AudioContext || window.webkitAudioContext)()
-const audioSource: Ref<AudioBufferSourceNode | null> = ref(null)
-const gainNode = audioContext.createGain()
-
+const rain = new Audio()
 
 // METHODS
 
@@ -58,41 +55,23 @@ const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') 
 const startTheRain = async () => {
   waiting.value = false
 
-  // Declaration of the loop settings
-  const duration = settings.duration === '30-minutes' ? 1800 : 3600
+  //const duration = settings.duration === '30-minutes' ? 1800 : 3600
   const fileID = Math.floor(Math.random() * 3) + 1
-  const now = audioContext.currentTime
-  const arrayBuffer = await fetch(`/sounds/${settings.atmosphere}-0${fileID}.flac`).then(res => res.arrayBuffer())
-  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer)
 
-  // Setting of the audio source
-  audioSource.value = audioContext.createBufferSource()
-  audioSource.value.buffer = audioBuffer
-  audioSource.value.loop = true
-  audioSource.value.connect(gainNode)
-  gainNode.connect(audioContext.destination)
+  rain.src = `/sounds/${settings.atmosphere}-0${fileID}.flac`
+  rain.volume = 0
 
-  // Declaration of the different loop steps
-  gainNode.gain.exponentialRampToValueAtTime(0.01, now)
-  gainNode.gain.exponentialRampToValueAtTime(1, now + 3)
-  audioSource.value.start()
-  gainNode.gain.exponentialRampToValueAtTime(1, now + duration - 20)
-  gainNode.gain.exponentialRampToValueAtTime(0.01, now + duration)
-  audioSource.value.stop(now + duration)
+  playAudio(rain)
+  // DURATIONS TO BE FIXED
+  setTimeout(async () => {
+    await stopAudio(rain, 2000)
+    waiting.value = true
+  }, 10000)
 }
 
-const stopTheRain = () => {
+const stopTheRain = async () => {
   waiting.value = true
-
-  if (audioSource.value) {
-    const now = audioContext.currentTime
-    
-    gainNode.gain.exponentialRampToValueAtTime(gainNode.gain.value, now)
-    gainNode.gain.exponentialRampToValueAtTime(0.01, now + 3)
-    audioSource.value.stop(now + 2)
-
-    audioSource.value = null
-  }
+  stopAudio(rain)
 }
 </script>
 
