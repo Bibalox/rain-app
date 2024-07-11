@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive } from 'vue'
 
 import AppHero from '@components/AppHero.vue'
 import AppSwitch from '@components/AppSwitch.vue'
@@ -12,12 +12,12 @@ import type { Option } from './types'
 
 // STATE
 
-const waiting = ref(true)
-
-const settings = {
+const state = reactive({
+  playing: false,
+  loading: true,
   atmosphere: 'gentle-rain',
   duration: '1-hour'
-}
+})
 
 
 // DATA
@@ -49,35 +49,47 @@ const rain = new Audio()
 
 // METHODS
 
-const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') => settings[optionType] = setting
+const loadAudio = () => {
+  state.loading = true
+  rain.src = `/sounds/${state.atmosphere}_${state.duration}.m4a`
+  rain.load()
+}
+
+const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') => {
+  state[optionType] = setting
+  loadAudio()
+}
 
 const startTheRain = async () => {
-  waiting.value = false
-
-  rain.src = `/sounds/${settings.atmosphere}_${settings.duration}.m4a`
+  state.playing = true
   rain.play()
 }
 
 const stopTheRain = async () => {
-  waiting.value = true
-  
+  state.playing = false
   rain.pause()
 }
+
+
+// INIT
+
+loadAudio()
+rain.addEventListener('canplaythrough', () => state.loading = false);
 </script>
 
 <template>
   <transition>
-    <main v-if="waiting" class="app__main">
+    <main v-if="!state.playing" class="app__main">
       <app-hero />
       <section class="app__section">
         <app-switch
           :options="options.atmospheres"
-          :value="settings.atmosphere"
+          :value="state.atmosphere"
           @click="setting => updateSettings(setting, 'atmosphere')"
         />
         <app-switch
           :options="options.durations"
-          :value="settings.duration"
+          :value="state.duration"
           @click="setting => updateSettings(setting, 'duration')"
         />
       </section>
@@ -87,7 +99,17 @@ const stopTheRain = async () => {
     <main v-else class="app__main">
       <app-puddle />
       <section class="app__section">
-        <app-title value="Sleep well" fade-out />
+        <transition>
+          <app-title
+            v-if="state.loading"
+            value="Loading..."
+          />
+          <app-title
+            v-else
+            value="Sleep well"
+            fade-out
+          />
+        </transition>
       </section>
       <app-button label="Stop" @click="stopTheRain()" />
     </main>
