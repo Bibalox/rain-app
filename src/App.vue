@@ -97,19 +97,17 @@ rain.addEventListener('canplaythrough', () => state.loading = false);
     </main>
       
     <main v-else class="app__main">
-      <app-puddle />
+      <app-puddle v-if="!state.loading" />
       <section class="app__section">
-        <transition>
-          <app-title
-            v-if="state.loading"
-            value="Loading..."
-          />
-          <app-title
-            v-else
-            value="Sleep well"
-            fade-out
-          />
-        </transition>
+        <app-title
+          v-if="state.loading"
+          value="Loading..."
+        />
+        <app-title
+          v-else
+          value="Sleep well"
+          fade-out
+        />
       </section>
       <app-button label="Stop" @click="stopTheRain()" />
     </main>
