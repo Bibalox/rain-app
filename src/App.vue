@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { playAudio, stopAudio } from '@utils/audio'
 
 import AppHero from '@components/AppHero.vue'
 import AppSwitch from '@components/AppSwitch.vue'
@@ -14,7 +13,6 @@ import type { Option } from './types'
 // STATE
 
 const waiting = ref(true)
-const timeoutID = ref(0)
 
 const settings = {
   atmosphere: 'gentle-rain',
@@ -56,24 +54,14 @@ const updateSettings = (setting: string, optionType: 'atmosphere' | 'duration') 
 const startTheRain = async () => {
   waiting.value = false
 
-  //const duration = settings.duration === '30-minutes' ? 1800 : 3600
-  const fileID = Math.floor(Math.random() * 3) + 1
-
-  rain.src = `/sounds/${settings.atmosphere}-0${fileID}.flac`
-  rain.volume = 0
-
-  playAudio(rain)
-  // DURATIONS TO BE FIXED
-  timeoutID.value = setTimeout(async () => {
-    await stopAudio(rain, 2000)
-    waiting.value = true
-  }, 10000)
+  rain.src = `/sounds/${settings.atmosphere}_${settings.duration}.m4a`
+  rain.play()
 }
 
 const stopTheRain = async () => {
   waiting.value = true
-  clearTimeout(timeoutID.value)
-  stopAudio(rain)
+  
+  rain.pause()
 }
 </script>
 
