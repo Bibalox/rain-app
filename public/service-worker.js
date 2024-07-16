@@ -13,7 +13,7 @@ self.addEventListener('install', e => {
       const cache = await caches.open(cacheName)
       console.log('[Service Worker] Start caching')
       await cache.addAll(filesToCache)
-      console.log('[Service Worker] Start caching')
+      console.log('[Service Worker] Caching completed')
     })()
   )
 })
