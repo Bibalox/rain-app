@@ -112,7 +112,7 @@ rain.addEventListener('canplaythrough', () => state.loading = false);
         />
       </section>
       <app-button 
-        class="app__maskable-element app__maskable-element--reversible"
+        :class="{ 'app__maskable-element app__maskable-element--reversible' : !state.loading }"
         label="Stop"
         @click="stopTheRain()"
       />
