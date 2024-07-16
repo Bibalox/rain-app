@@ -46,6 +46,7 @@ const options: { [key: string]: Option[] } = {
 }
 
 const rain = new Audio()
+rain.src = URL.createObjectURL(new Blob([], { type:'audio/mp4' }))
 
 // METHODS
 
