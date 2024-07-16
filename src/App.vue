@@ -68,6 +68,7 @@ const startTheRain = async () => {
 const stopTheRain = async () => {
   state.playing = false
   rain.pause()
+  rain.currentTime = 0
 }
 
 
