@@ -108,10 +108,14 @@ rain.addEventListener('canplaythrough', () => state.loading = false);
         <app-title
           v-else
           value="Sleep well"
-          fade-out
+          class="app__maskable-element"
         />
       </section>
-      <app-button label="Stop" @click="stopTheRain()" />
+      <app-button 
+        class="app__maskable-element app__maskable-element--reversible"
+        label="Stop"
+        @click="stopTheRain()"
+      />
     </main>
   </transition>
 </template>
@@ -175,6 +179,24 @@ body {
     gap: 24px;
     justify-content: center;
     width: 100%;
+  }
+
+  &__maskable-element {
+    animation: fadeOut 5s 5s ease-out both;
+
+    body:active &--reversible {
+      animation: none;
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
   }
 }
 
