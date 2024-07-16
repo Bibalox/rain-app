@@ -27,5 +27,6 @@
   ],
   "start_url": "/index.html",
   "background_color": "#000000",
-  "display": "fullscreen"
+  "display": "fullscreen",
+  "theme_color": "#000000"
 }
