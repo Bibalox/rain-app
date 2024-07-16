@@ -1,11 +1,6 @@
 {
-  "name": "Rainy night",
-  "short_name": "Rainy night",
-  "start_url": "/index.html",
   "background_color": "#000000",
   "display": "fullscreen",
-  "orientation": "portrait",
-  "lang": "en_US",
   "icons": [
     {
       "src": "icons/app/android-chrome-maskable-192x192.png",
@@ -29,5 +24,11 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "lang": "en_US",
+  "name": "Rainy night",
+  "orientation": "portrait",
+  "short_name": "Rainy night",
+  "start_url": "/index.html",
+  "theme_color": "#000"
 }
